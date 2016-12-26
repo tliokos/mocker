@@ -1,0 +1,33 @@
+{
+    "name": "tliokos/mocker",
+    "description": "Microservices Mocking Framework",
+    "keywords": ["microservices", "mocking"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "flow/jsonpath": "^0.3",
+        "league/fractal":"^0.14",
+        "silex/silex": "~2.0",
+        "symfony/yaml": "^3.1",
+        "symfony/validator": "^3.1",
+        "symfony/var-dumper":"^3.1",
+        "twig/twig": "^1.28",
+        "vlucas/phpdotenv":"^2.3",
+        "guzzlehttp/guzzle": "^6.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.2",
+        "mockery/mockery": "^0.9",
+        "predis/predis": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mocker\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mocker\\Test\\": "tests/"
+        }
+    }
+}

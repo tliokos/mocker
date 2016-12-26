@@ -1,0 +1,141 @@
+{% extends 'master.twig' %}
+
+{% block title %}
+    <title>Mocker - Contracts</title>
+{% endblock %}
+
+{% block assets %}
+    {{ parent() }}
+    <script type="text/javascript" src="/js/libraries/clipboard.min.js"></script>
+    <script type="text/javascript" src="/js/libraries/ace.js"></script>
+    <script type="text/javascript" src="/js/libraries/theme-github.js"></script>
+    <script type="text/javascript" src="/js/libraries/mode-json.js"></script>
+    <script type="text/javascript" src="/js/libraries/typeahead.min.js"></script>
+    <script type="text/javascript" src="/js/contract.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h2>Contracts</h2>
+    <button class="btn btn-success pre-create" data-toggle="modal" data-target="#contracts-modal">
+        <span class="glyphicon glyphicon-plus-sign"></span> Create New Contract
+    </button>
+    <table id="contracts-table" class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Contract Id</th>
+                <th>Microservice Id</th>
+                <th>Microservice</th>
+                <th>Method</th>
+                <th>Url</th>
+                <th>Response Code</th>
+                <th>Mocker Link</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Contract Id</th>
+            <th>Microservice Id</th>
+            <th>Microservice</th>
+            <th>Method</th>
+            <th>Url</th>
+            <th>Response Code</th>
+            <th>Mocker Link</th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
+    <div class="modal fade" id="contracts-modal" tabindex="-1" role="dialog" aria-labelledby="Create New Contract">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create New Contract</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger errors"></p>
+                    <form id="contracts-form">
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tab-general" aria-controls="tab-general" role="tab" data-toggle="tab">General</a></li>
+                                <li role="presentation"><a href="#tab-request" aria-controls="tab-request" role="tab" data-toggle="tab">Request</a></li>
+                                <li role="presentation"><a href="#teb-response" aria-controls="teb-response" role="tab" data-toggle="tab">Response</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="tab-general">
+                                    <div class="form-group">
+                                        <label for="microservice">Microservice</label>
+                                        <select id="microservice" name="microservice" class="form-control">
+                                            <option value="">Please Select Microservice</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="url">Method & Url</label>
+                                        <div class="input-group">
+                                            <select id="method" name="method" class="form-control">
+                                                <option value="GET">GET</option>
+                                                <option value="POST">POST</option>
+                                                <option value="PUT">PUT</option>
+                                                <option value="PATCH">PATCH</option>
+                                                <option value="DELETE">DELETE</option>
+                                                <option value="OPTIONS">OPTIONS</option>
+                                            </select>
+                                            <input type="text" id="url" name="url" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab-request">
+                                    <div class="form-group">
+                                        <label>Headers</label>
+                                        <div class="input-group headers">
+                                            <input type="text" class="header-label form-control"/>
+                                            <input type="text" class="header-value form-control"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-sm btn-success add-header">
+                                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group request-body">
+                                        <label for="request">Body</label>
+                                        <div id="request" class="json-editor"></div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="teb-response">
+                                    <div class="form-group">
+                                        <label for="code">Code</label>
+                                        <select id="code" name="code" class="form-control">
+                                            <option value="">Please Select Response Code</option>
+                                            <option value="200">200 OK</option>
+                                            <option value="201">201 Created</option>
+                                            <option value="204">204 No Content</option>
+                                            <option value="304">304 Not Modified</option>
+                                            <option value="400">400 Bad Request</option>
+                                            <option value="401">401 Unauthorized</option>
+                                            <option value="403">403 Forbidden</option>
+                                            <option value="404">404 Not Found</option>
+                                            <option value="409">409 Conflict</option>
+                                            <option value="422">422 Unprocessable Entity</option>
+                                            <option value="500">500 Internal Server Error</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="response">Body</label>
+                                        <div id="response" class="json-editor"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="id" name="id"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary create">Save</button>
+                    <button type="button" class="btn btn-primary update">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

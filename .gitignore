@@ -1,0 +1,6 @@
+.env
+.idea/
+vendor/
+tests/_output/*
+tests/_output/*
+tests/_output/*

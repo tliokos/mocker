@@ -1,0 +1,11 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - Redis
+        - REST:
+            url: http://mocker.testing
+            depends: PhpBrowser
+        - PhpBrowser:
+            url: http://mocker.testing
+        - \Helper\Acceptance
+        - Asserts

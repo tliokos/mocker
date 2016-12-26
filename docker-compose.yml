@@ -1,0 +1,21 @@
+version: '2'
+services:
+  apache:
+    build: containers/apache
+    container_name: mocker-apache
+    volumes:
+      - ./:/var/www/mocker/
+    ports:
+      - 8080:80
+    links:
+      - redis
+    extra_hosts:
+      - mocker.local:127.0.0.1
+      - mocker.testing:127.0.0.1
+  redis:
+    image: redis
+    container_name: mocker-redis
+    volumes:
+      - mocker-data:/var/lib/redis
+volumes:
+  mocker-data:
