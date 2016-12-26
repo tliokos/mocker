@@ -2,5 +2,4 @@
 .idea/
 vendor/
 tests/_output/*
-tests/_output/*
-tests/_output/*
+composer.lock
