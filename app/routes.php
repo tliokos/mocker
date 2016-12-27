@@ -4,6 +4,19 @@ $app->get('/dashboard/{template}', function($template) use ($app) {
     return $app['twig']->render($template . '.twig');
 });
 
+$app->get('/api/microservices', 'microservice.controller:list');
+$app->post('/api/microservices', 'microservice.controller:create');
+$app->delete('/api/microservices/{microserviceId}', 'microservice.controller:delete');
+
+$app->get('/api/contracts', 'contract.controller:list');
+$app->get('/api/contracts/{contractId}', 'contract.controller:get');
+$app->post('/api/contracts', 'contract.controller:create');
+$app->put('/api/contracts/{contractId}', 'contract.controller:update');
+$app->delete('/api/contracts/{contractId}', 'contract.controller:delete');
+
+$app->match('/mocker/{contractId}', 'mocks.controller:handle')
+    ->method('GET|POST|PUT|PATCH|DELETE|OPTIONS');
+
 $app->get('/api/httpHeaders', function() {
     return new \Symfony\Component\HttpFoundation\JsonResponse([
         ['id' => 'Accept', 'name' => 'Accept'],
@@ -40,15 +53,3 @@ $app->get('/api/httpHeaders', function() {
         ['id' => 'Warning', 'name' => 'Warning']
     ], Mocker\StatusCode::OK);
 });
-
-$app->get('/api/microservices', 'microservice.controller:list');
-$app->post('/api/microservices', 'microservice.controller:create');
-$app->delete('/api/microservices/{microserviceId}', 'microservice.controller:delete');
-
-$app->get('/api/contracts', 'contract.controller:list');
-$app->post('/api/contracts', 'contract.controller:create');
-$app->put('/api/contracts/{contractId}', 'contract.controller:update');
-$app->delete('/api/contracts/{contractId}', 'contract.controller:delete');
-
-$app->match('/mocker/{contractId}', 'mocks.controller:handle')
-    ->method('GET|POST|PUT|PATCH|DELETE|OPTIONS');

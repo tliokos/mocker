@@ -74,6 +74,15 @@ class ContractController
         return new JsonResponse($contracts, StatusCode::OK);
     }
 
+    public function get(string $contractId) : JsonResponse
+    {
+        $contract = $this->contract->get($contractId);
+        $contract = $this->resourceFormatter
+            ->setTransformer('contract.item')->formatItem($contract);
+
+        return new JsonResponse($contract, StatusCode::OK);
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -85,7 +94,7 @@ class ContractController
         $this->relationship->addContract($data['microservice']['id'], $contractId);
         $this->microservice->updateContractsCounter($data['microservice']['id'], 1);
         $contract = $this->resourceFormatter
-            ->setTransformer('contract.item')->formatItem(['id' => $contractId]);
+            ->setTransformer('contract.id')->formatItem(['id' => $contractId]);
 
         return new JsonResponse($contract, StatusCode::CREATED);
     }
