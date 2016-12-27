@@ -27,15 +27,14 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 WORKDIR $APACHE_DIR
 RUN rm -f \
-    	sites-enabled/000-default.conf \
-    	conf-enabled/serve-cgi-bin.conf \
-    	mods-enabled/autoindex.conf \
-    	mods-enabled/autoindex.load
+    sites-enabled/000-default.conf \
+    conf-enabled/serve-cgi-bin.conf \
+    mods-enabled/autoindex.conf \
+    mods-enabled/autoindex.load
 
 RUN ln -s $APACHE_DIR/mods-available/expires.load $APACHE_DIR/mods-enabled/expires.load \
     && ln -s $APACHE_DIR/mods-available/headers.load $APACHE_DIR/mods-enabled/headers.load \
 	&& ln -s $APACHE_DIR/mods-available/rewrite.load $APACHE_DIR/mods-enabled/rewrite.load
-
 
 COPY mocker.local.conf /etc/apache2/sites-enabled/
 COPY mocker.testing.conf /etc/apache2/sites-enabled/
