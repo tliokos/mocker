@@ -161,21 +161,6 @@ Mocker.View = function(dataTable, modal){
         dataTable.ajax.reload();
     };
 
-    this.resetModal = function(){
-        errorsWrapper.html('').hide();
-        $('.remove-header').click();
-        $('.nav-tabs a[href="#tab-general"]').tab('show');
-        modal.find('input, textarea').val('');
-        modal.find('#microservice').prop('disabled', false).val('');
-        modal.find('#method').val($('#method option:first').val());
-        modal.find('#code').val($('#code option:first').val());
-        if (typeof ace !== 'undefined') {
-            ace.edit('request').setValue('');
-            ace.edit('response').setValue('');
-        }
-        return this;
-    };
-
     this.hideModal = function(){
         modal.modal('hide');
         return this;
@@ -202,7 +187,7 @@ Mocker.Controller = function(view) {
                 params.trigger.removeAttr('disabled');
                 var data = response ? response.data : null;
                 params.callback(params.data, data);
-                view.resetModal().hideModal();
+                view.hideModal();
             }
         });
     };

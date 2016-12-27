@@ -45,7 +45,8 @@ $(function(){
     var controller = new Mocker.Controller(view);
 
     $('.pre-create').on('click', function(){
-        view.resetModal();
+        $('.errors', modal).html('').hide();
+        modal.find('input, textarea').val('');
         htmlHelper.onlyButton('create', modal);
     });
 

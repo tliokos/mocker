@@ -100,9 +100,39 @@ $(function(){
     var view = new Mocker.View(dataTable, modal);
     var controller = new Mocker.Controller(view);
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+        fields.request.resize();
+        fields.request.clearSelection();
+        fields.response.resize();
+        fields.response.clearSelection();
+    });
+
     $('.pre-create').on('click', function(){
-        view.resetModal();
+        $('.errors', modal).html('').hide();
+        modal.find('input').val('');
+        fields.request.setValue('', -1);
+        fields.response.setValue('', -1);
+        $('.remove-header').click();
+        fields.microservice.prop('disabled', false).val('');
+        fields.method.val($('option:first', fields.method).val());
+        fields.code.val('');
         htmlHelper.onlyButton('create', modal);
+        $('.nav-tabs a[href="#tab-general"]').tab('show');
+    });
+
+    table.on('click', '.pre-update', function(){
+        var contract = view.getRow($(this)).data();
+        fields.id.val(contract.id);
+        fields.microservice.prop('disabled', true).val(contract.microservice.id);
+        fields.method.val(contract.method);
+        fields.url.val(contract.url);
+        fields.request.setValue(contract.request, -1);
+        fields.code.val(contract.code);
+        fields.response.setValue(contract.response, -1);
+        htmlHelper.populateHeaders(contract.headers, modal);
+        htmlHelper.onlyButton('update', modal);
+        $('.nav-tabs a[href="#tab-general"]').tab('show');
+        modal.modal('show')
     });
 
     modal.on('click', '.create', function() {
@@ -157,20 +187,6 @@ $(function(){
                 view.reload()
             }
         })
-    });
-
-    table.on('click', '.pre-update', function(){
-        var contract = view.getRow($(this)).data();
-        fields.id.val(contract.id);
-        fields.microservice.prop('disabled', true).val(contract.microservice.id);
-        fields.method.val(contract.method);
-        fields.url.val(contract.url);
-        fields.request.setValue(contract.request);
-        fields.code.val(contract.code);
-        fields.response.setValue(contract.response);
-        htmlHelper.populateHeaders(contract.headers, modal);
-        htmlHelper.onlyButton('update', modal);
-        modal.modal('show')
     });
 
     table.on('click', '.copy-to-clipboard', function(){
