@@ -1,5 +1,5 @@
-Mocker
-====================
+Mocker - Microservices Mocking Solution
+=======================================
 
 ### About Mocker
 
@@ -34,14 +34,14 @@ Method: GET, URL: producer/1
 Code: 200, Body: [{"id":1, "name":"name"}]
 ```
 Once we crate this contract by using the UI provided with Mocker, we will 
-get back a unique Url (e.g. `mocker/2e23e6cf6f5fde596b25fa0f323d19d2`) 
+get back a unique Url (e.g. `mocker/2e23e6cf6f5`) 
 that we can use in order to test.
 
 ##### Testing the Consumer
 
 While we are testing the consumer, we just execute the method specified in the 
 contract against the Url provided by Mocker. For example in Codeception, it will
-be something like `$I->sendGET('mocker/2e23e6cf6f5fde596b25fa0f323d19d2');`. 
+be something like `$I->sendGET('mocker/2e23e6cf6f5');`. 
 This will give as back the response specified in the contract with the respective code.
 As soon as we have the response back, it is really easy to test if the `Consumer` behaves
 the way we expect it to do.
@@ -52,7 +52,7 @@ While we are testing the producer, we need to get first the information stored i
 execute the request to the URL specified in the contract and check that the response is exactly the 
 same as the one specified in the contract.
 ```
-$contract = $guzzle->get('api/2e23e6cf6f5fde596b25fa0f323d19d2');
+$contract = $guzzle->get('api/2e23e6cf6f5');
 $I->sendGET($contract['url']);
 $response = $I->grabDataFromResponseByJsonPath('$.....');
 $I->assertEquals($contract['response'], response);
