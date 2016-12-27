@@ -31,7 +31,7 @@ $(function(){
                 class: 'center',
                 orderable: false,
                 render: function(contracts){
-                    return htmlHelper.renderContractLabels(contracts)
+                    return htmlHelper.renderContractsCounterLabel(contracts)
                 }
             },
             {   data: null,
@@ -47,7 +47,6 @@ $(function(){
     $('.pre-create').on('click', function(){
         $('.errors', modal).html('').hide();
         modal.find('input, textarea').val('');
-        htmlHelper.onlyButton('create', modal);
     });
 
     modal.on('click', '.create', function() {

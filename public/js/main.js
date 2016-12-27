@@ -18,13 +18,13 @@ Mocker.HtmlHelper = function(){
         return this.renderDeleteButton() + this.renderUpdateButton();
     };
 
-    this.renderContractLabels = function(contracts){
+    this.renderContractsCounterLabel = function(contracts){
         return $('<span>').prop({
             class: 'label label-' + (contracts == 0 ? 'danger' : 'success')
         }).html(contracts).prop('outerHTML')
     };
 
-    this.renderCodeLabels = function(code) {
+    this.renderResponseCodeLabel = function(code) {
         var label = code < 300 ? 'success' : (
             code < 400 ? 'danger' : (
                 code < 500 ? 'info' : 'warning'

@@ -48,7 +48,7 @@ $(function(){
                 width: '15%',
                 class: 'list-filtering',
                 render: function(code) {
-                    return htmlHelper.renderCodeLabels(code);
+                    return htmlHelper.renderResponseCodeLabel(code);
                 }
             },
             {
