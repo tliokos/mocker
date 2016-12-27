@@ -52,7 +52,7 @@ While we are testing the producer, we need to get first the information stored i
 execute the request to the URL specified in the contract and check that the response is exactly the 
 same as the one specified in the contract.
 ```
-$contract = $guzzle->get('api/2e23e6cf6f5');
+$contract = $guzzle->get('api/contracts/2e23e6cf6f5');
 $I->sendGET($contract['url']);
 $response = $I->grabDataFromResponseByJsonPath('$.....');
 $I->assertEquals($contract['response'], response);
