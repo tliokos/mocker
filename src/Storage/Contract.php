@@ -74,11 +74,11 @@ class Contract
     }
 
     /**
-     * @param string $expectationId
+     * @param string $contractId
      * @return int
      */
-    public function delete(string $expectationId) : int
+    public function delete(string $contractId) : int
     {
-        return $this->storage->del(sprintf(self::CONTRACTS_KEY, $expectationId));
+        return $this->storage->del(sprintf(self::CONTRACTS_KEY, $contractId));
     }
 }
