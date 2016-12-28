@@ -4,7 +4,7 @@ $app['dotenv'] = function() {
     $dotEnvFile = $_SERVER['ENVIRONMENT'] === \Mocker\Environment::TESTING
         ? '.env.testing'
         : '.env';
-    return new \Dotenv\Dotenv(__DIR__ . '/../../', $dotEnvFile);
+    return new Dotenv\Dotenv(__DIR__ . '/../../', $dotEnvFile);
 };
 
 $app['http.client'] = function() {
