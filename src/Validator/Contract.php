@@ -3,7 +3,6 @@
 namespace Mocker\Validator;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Mocker\{Storage\Contract as ContractStorage};
 
 class Contract extends AbstractValidator
 {
