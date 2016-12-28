@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocker\Test\Unit\Service\Resource;
+namespace Mocker\Test\Unit\Resource;
 
 use Mockery;
 use Codeception\Util\Fixtures;

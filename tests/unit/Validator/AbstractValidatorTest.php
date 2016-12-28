@@ -38,7 +38,6 @@ class AbstractValidatorTest extends \Codeception\Test\Unit
 
         $this->assertEquals(true, $validationResult);
         $this->assertArrayNotHasKey('Name', $this->validator->getErrorMessages());
-        $this->assertArrayNotHasKey('Name', $this->validator->getErrorMessages());
     }
 
     public function testValidationFails()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mocker\Test\Unit\Service\Provider;
+namespace Mocker\Test\Unit\Provider;
 
 class DotEnvLoaderTest extends \Codeception\Test\Unit
 {
