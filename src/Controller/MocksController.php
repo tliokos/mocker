@@ -32,7 +32,7 @@ class MocksController
         $contract = $this->contract->get($contractId);
         if($request->getMethod() !== $contract['method']) {
             throw new \Exception(
-                sprintf('No route found for %s %s', $contract['method'], $contract['url']),
+                sprintf('The contract you\'re trying to access doesn\'t exist'),
                 StatusCode::NOT_FOUND);
         }
 
