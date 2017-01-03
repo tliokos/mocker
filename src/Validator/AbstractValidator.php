@@ -14,6 +14,11 @@ abstract class AbstractValidator
     /**
      * @var array
      */
+    private $resource;
+
+    /**
+     * @var array
+     */
     protected $errorMessages = [];
 
     /**
@@ -40,6 +45,7 @@ abstract class AbstractValidator
      */
     public function validate(array $resource, string $context) : bool
     {
+        $this->resource = $resource;
         $constraints = $this->getConstraints($context);
         $validationErrors = $this->validator->validate($resource, $constraints);
 
@@ -67,5 +73,13 @@ abstract class AbstractValidator
         }
 
         return $this->$context();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getResource() : array
+    {
+        return $this->resource;
     }
 }

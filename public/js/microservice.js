@@ -10,7 +10,7 @@ $(function(){
 
     var dataTable = table.DataTable({
         autoWidth: false,
-        ajax: '/api/microservices',
+        ajax: '/mocker-api/microservices',
         order: [[ 1, 'asc' ]],
         columns: [
             {
@@ -52,7 +52,7 @@ $(function(){
     modal.on('click', '.create', function() {
         controller.create({
             trigger: $(this),
-            url: '/api/microservices',
+            url: '/mocker-api/microservices',
             data: {
                 name: fields.name.val(),
                 description: fields.description.val()
@@ -67,7 +67,7 @@ $(function(){
     });
 
     table.on('click', '.delete', function(){
-        controller.delete($(this), '/api/microservices', function(microservice) {
+        controller.delete($(this), '/mocker-api/microservices', function(microservice) {
             view.removeRow(microservice);
         });
     });

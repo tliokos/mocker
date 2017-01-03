@@ -35,17 +35,6 @@ Mocker.HtmlHelper = function(){
         }).html(code).prop('outerHTML');
     };
 
-    this.renderMockerLink = function(data){
-        var id = 'mocker-link-' + data.id;
-        var value = 'mocker/' + data.id;
-        return '<div class="input-group">'
-            + '<input readonly="readonly" type="text" class="form-control" id="' + id + '" value="' + value +  '"/>'
-            + '<span class="input-group-btn">'
-            + '<button class="btn copy-to-clipboard" data-clipboard-target="#' + id + '">Copy</button>'
-            + '</span>'
-            + '</div>'
-    };
-
     this.renderJsonEditor = function(element, theme){
         var editor = ace.edit(element);
         editor.setTheme(theme);
@@ -56,7 +45,7 @@ Mocker.HtmlHelper = function(){
     };
 
     this.populateMicroservicesDropDown = function(dropDown) {
-        $.get('/api/microservices', function(microservices){
+        $.get('/mocker-api/microservices', function(microservices){
             for(var i in microservices.data) {
                 if(microservices.data.hasOwnProperty(i)) {
                     dropDown.append($('<option>', {
@@ -102,7 +91,7 @@ Mocker.HtmlHelper = function(){
     };
 
     this.registerAutocomplete = function(){
-        $.get('/api/httpHeaders', function(response){
+        $.get('/mocker-api/httpHeaders', function(response){
             httpHeaders = response;
             $('.header-label').typeahead({
                 source:httpHeaders

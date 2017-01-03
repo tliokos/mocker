@@ -41,7 +41,7 @@ class MicroservicesCest
     {
         $I->wantTo("Create a Microservice with valid data");
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/microservices', $this->microservice);
+        $I->sendPOST('/mocker-api/microservices', $this->microservice);
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::CREATED);
         $I->seeResponseIsJson();
         $I->assertEquals($this->id, $I->grabDataFromResponseByJsonPath('$.data.id')[0]);
@@ -56,7 +56,7 @@ class MicroservicesCest
         $I->wantTo("Create a Microservice with invalid data");
         $I->haveInRedis('hash', $this->hash, $this->microservice);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/microservices', $this->microservice);
+        $I->sendPOST('/mocker-api/microservices', $this->microservice);
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
     }
@@ -65,7 +65,7 @@ class MicroservicesCest
     {
         $I->wantTo("Create a Microservice with missing data");
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/microservices', []);
+        $I->sendPOST('/mocker-api/microservices', []);
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
     }
@@ -75,7 +75,7 @@ class MicroservicesCest
         $I->wantTo("Create a Contract under a Microservice");
         $I->haveInRedis('hash', $this->hash, array_merge($this->microservice, ['contracts' => 0]));
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/contracts', array_merge([
+        $I->sendPOST('/mocker-api/contracts', array_merge([
             'microservice' => [
                 'id' => $this->id,
                 'name' => $this->microservice['name']
@@ -94,7 +94,7 @@ class MicroservicesCest
         $I->wantTo("Delete a Microservice");
         $I->haveInRedis('hash', $this->hash, $this->microservice);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendDELETE('/api/microservices/' . $this->id);
+        $I->sendDELETE('/mocker-api/microservices/' . $this->id);
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::NO_CONTENT);
         $I->seeResponseEquals(null);
         $I->dontSeeInRedis($this->hash);
@@ -105,7 +105,7 @@ class MicroservicesCest
         $I->wantTo("Delete a Microservice with Contracts");
         $I->haveInRedis('hash', $this->hash, array_merge($this->microservice, ['contracts' => 0]));
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/contracts', array_merge([
+        $I->sendPOST('/mocker-api/contracts', array_merge([
             'microservice' => [
                 'id' => $this->id,
                 'name' => $this->microservice['name']
@@ -113,7 +113,7 @@ class MicroservicesCest
         $contractHash = sprintf(ContractStorage::CONTRACTS_KEY,$I->grabDataFromResponseByJsonPath('$.data.id')[0]);
         $relationshipHash = sprintf(RelationshipStorage::RELATIONSHIPS_KEY, $this->id);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendDELETE('/api/microservices/' . $this->id);
+        $I->sendDELETE('/mocker-api/microservices/' . $this->id);
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::NO_CONTENT);
         $I->dontSeeInRedis($this->hash);
         $I->dontSeeInRedis($contractHash);

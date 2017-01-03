@@ -40,7 +40,7 @@ class ContractsCest
         $I->wantTo("Create a Contract with valid data");
         $I->haveInRedis('hash', $this->microserviceHash, $this->microservice);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/contracts', array_merge([
+        $I->sendPOST('/mocker-api/contracts', array_merge([
             'microservice' => [
                 'id' => $this->microserviceId,
                 'name' => $this->microservice['name']
@@ -67,7 +67,7 @@ class ContractsCest
         $I->wantTo("Update a Contract with valid data");
         $I->haveInRedis('hash', $this->microserviceHash, $this->microservice);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/contracts', array_merge([
+        $I->sendPOST('/mocker-api/contracts', array_merge([
             'microservice' => [
                 'id' => $this->microserviceId,
                 'name' => $this->microservice['name']
@@ -75,7 +75,7 @@ class ContractsCest
         $contractId = $I->grabDataFromResponseByJsonPath('$.data.id')[0];
         $contractHash = sprintf(ContractStorage::CONTRACTS_KEY, $contractId);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPUT('/api/contracts/' . $contractId, [
+        $I->sendPUT('/mocker-api/contracts/' . $contractId, [
             'microservice' => [
                 'id' => $this->microserviceId,
                 'name' => $this->microservice['name']
@@ -110,7 +110,7 @@ class ContractsCest
     {
         $I->wantTo("Create a Contract with Missing Data");
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/contracts', [
+        $I->sendPOST('/mocker-api/contracts', [
             'microservice' => $contract['microservice'],
             'method' => $contract['method'],
             'url' => $contract['url'],
@@ -131,14 +131,14 @@ class ContractsCest
         $I->wantTo("Update a Contract with Missing Data");
         $I->haveInRedis('hash', $this->microserviceHash, $this->microservice);
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/api/contracts', array_merge([
+        $I->sendPOST('/mocker-api/contracts', array_merge([
             'microservice' => [
                 'id' => $this->microserviceId,
                 'name' => $this->microservice['name']
             ]], $this->contract));
         $contractId = $I->grabDataFromResponseByJsonPath('$.data.id')[0];
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPUT('/api/contracts/' . $contractId, [
+        $I->sendPUT('/mocker-api/contracts/' . $contractId, [
             'microservice' => $contract['microservice'],
             'method' => $contract['method'],
             'url' => $contract['url'],

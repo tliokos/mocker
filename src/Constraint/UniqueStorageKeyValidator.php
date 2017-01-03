@@ -14,7 +14,7 @@ class UniqueStorageKeyValidator extends ConstraintValidator
 
     /**
      * UniqueStorageKeyValidator constructor.
-     * @param Redis $queryBuilder
+     * @param Redis $storage
      */
     public function __construct(Redis $storage)
     {
@@ -27,8 +27,7 @@ class UniqueStorageKeyValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $microserviceId = ($constraint->getHashingAlgorithm())($value);
-        $key = $this->storage->keys(sprintf($constraint->getPattern(), $microserviceId))[0];
+        $key = $this->storage->keys($constraint->getHash())[0];
         if($key) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }

@@ -23,16 +23,17 @@ class MocksController
 
     /**
      * @param Request $request
-     * @param $contractId
+     * @param $contractUrl
      * @return JsonResponse
      * @throws \Exception
      */
-    public function handle(Request $request, $contractId) : JsonResponse
+    public function handle(Request $request, $contractUrl) : JsonResponse
     {
+        $contractId = md5($request->getMethod() . $contractUrl);
         $contract = $this->contract->get($contractId);
-        if($request->getMethod() !== $contract['method']) {
+        if(!$contract) {
             throw new \Exception(
-                sprintf('The contract you\'re trying to access doesn\'t exist'),
+                sprintf('The contract %s::%s doesn\'t exist', $request->getMethod(), $contractUrl),
                 StatusCode::NOT_FOUND);
         }
 

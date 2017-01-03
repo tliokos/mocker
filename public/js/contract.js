@@ -16,7 +16,7 @@ $(function(){
 
     var dataTable = table.DataTable({
         autoWidth: false,
-        ajax: '/api/contracts',
+        ajax: '/mocker-api/contracts',
         columns: [
             {
                 data: 'id',
@@ -30,12 +30,12 @@ $(function(){
             },
             {
                 data: 'microservice.name',
-                width: '15%',
+                width: '20%',
                 class: 'list-filtering'
             },
             {
                 data: 'method',
-                width: '15%',
+                width: '20%',
                 class: 'list-filtering'
             },
             {
@@ -45,17 +45,10 @@ $(function(){
             },
             {
                 data: 'code',
-                width: '15%',
+                width: '20%',
                 class: 'list-filtering',
                 render: function(code) {
                     return htmlHelper.renderResponseCodeLabel(code);
-                }
-            },
-            {
-                data: null,
-                orderable: false,
-                render: function(data) {
-                    return htmlHelper.renderMockerLink(data);
                 }
             },
             {
@@ -139,7 +132,7 @@ $(function(){
         var headers = htmlHelper.getHeaderData();
         controller.create({
             trigger: $(this),
-            url: '/api/contracts',
+            url: '/mocker-api/contracts',
             data: {
                 microservice: {
                     id: fields.microservice.val(),
@@ -170,7 +163,7 @@ $(function(){
 
         controller.update({
             trigger: $(this),
-            url: '/api/contracts/' + fields.id.val(),
+            url: '/mocker-api/contracts/' + fields.id.val(),
             data: {
                 microservice: {
                     id: fields.microservice.val(),
@@ -194,7 +187,7 @@ $(function(){
     });
 
     table.on('click', '.delete', function(){
-        controller.delete($(this), '/api/contracts', function(contract) {
+        controller.delete($(this), '/mocker-api/contracts', function(contract) {
             view.removeRow(contract);
         });
     });

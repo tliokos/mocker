@@ -51,7 +51,7 @@ class Contract
      */
     public function create($contract) : string
     {
-        $contractId = md5(json_encode($contract) . microtime(true));
+        $contractId = md5($contract['method'] . $contract['url']);
         $contract = array_merge(['id' => $contractId], $contract);
         $this->storage->hMset(sprintf(self::CONTRACTS_KEY, $contractId), array_map(function($field) {
             return is_array($field) ? json_encode($field) : $field;

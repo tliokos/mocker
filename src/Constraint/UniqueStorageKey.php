@@ -2,7 +2,6 @@
 
 namespace Mocker\Constraint;
 
-use Closure;
 use Symfony\Component\Validator\Constraint;
 
 class UniqueStorageKey extends Constraint
@@ -15,39 +14,24 @@ class UniqueStorageKey extends Constraint
     /**
      * @var string
      */
-    private $pattern;
-
-    /**
-     * @var callable
-     */
-    private $hashingAlgorithm;
+    private $hash;
 
     /**
      * UniqueStorageKey constructor.
-     * @param string $pattern
-     * @param callable $hashingAlgorithm
+     * @param string $hash
      */
-    public function __construct(string $pattern, Closure $hashingAlgorithm)
+    public function __construct(string $hash)
     {
         parent::__construct();
-        $this->pattern = $pattern;
-        $this->hashingAlgorithm = $hashingAlgorithm;
+        $this->hash = $hash;
     }
 
     /**
      * @return string
      */
-    public function getPattern() : string
+    public function getHash() : string
     {
-        return $this->pattern;
-    }
-
-    /**
-     * @return callable
-     */
-    public function getHashingAlgorithm() : callable
-    {
-        return $this->hashingAlgorithm;
+        return $this->hash;
     }
 
     /**
