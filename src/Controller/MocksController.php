@@ -27,9 +27,9 @@ class MocksController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function handle(Request $request, $contractUrl) : JsonResponse
+    public function handle(Request $request, $microservice, $contractUrl) : JsonResponse
     {
-        $contractId = md5($request->getMethod() . $contractUrl);
+        $contractId = md5($microservice . $request->getMethod() . $contractUrl);
         $contract = $this->contract->get($contractId);
         if(!$contract) {
             throw new \Exception(

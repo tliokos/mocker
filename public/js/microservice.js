@@ -34,7 +34,8 @@ $(function(){
                     return htmlHelper.renderContractsCounterLabel(contracts)
                 }
             },
-            {   data: null,
+            {
+                data: null,
                 orderable: false,
                 defaultContent: htmlHelper.renderDeleteButton()
             }

@@ -117,8 +117,8 @@ $(function(){
         var contract = view.getRow($(this)).data();
         fields.id.val(contract.id);
         fields.microservice.prop('disabled', true).val(contract.microservice.id);
-        fields.method.val(contract.method);
-        fields.url.val(contract.url);
+        fields.method.prop('disabled', true).val(contract.method);
+        fields.url.prop('disabled', true).val(contract.url);
         fields.request.setValue(contract.request, -1);
         fields.code.val(contract.code);
         fields.response.setValue(contract.response, -1);
