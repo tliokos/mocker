@@ -177,13 +177,23 @@ $(function(){
         })
     });
 
-    table.on('click', '.copy-to-clipboard', function(){
+    table.on('click', '.copy-to-clipboard', function() {
         new Clipboard(this);
     });
 
-    table.on('click', '.delete', function(){
-        controller.delete($(this), '/mocker-api/contracts', function(contract) {
-            view.removeRow(contract);
+    table.on('click', '.delete', function() {
+        controller.delete({
+            trigger: $(this),
+            url: '/mocker-api/contracts',
+            getLabel: function(row) {
+                var microservice = row.data().microservice.name;
+                var method = row.data().method;
+                var url = row.data().url;
+                return 'contract "<b>' + method + '::' + microservice + '/' + url + '</b>"';
+            },
+            callback: function(microservice) {
+                view.removeRow(microservice);
+            }
         });
     });
 

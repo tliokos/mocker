@@ -67,8 +67,15 @@ $(function(){
     });
 
     table.on('click', '.delete', function(){
-        controller.delete($(this), '/mocker-api/microservices', function(microservice) {
-            view.removeRow(microservice);
+        controller.delete({
+            trigger: $(this),
+            url: '/mocker-api/microservices',
+            getLabel: function(row) {
+                return 'microservice "<b>' + row.data().name + '</b>"';
+            },
+            callback: function(microservice) {
+                view.removeRow(microservice);
+            }
         });
     });
 });
