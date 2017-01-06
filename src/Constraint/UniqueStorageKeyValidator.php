@@ -27,7 +27,7 @@ class UniqueStorageKeyValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $key = $this->storage->keys($constraint->getHash())[0];
+        $key = $this->storage->keys($constraint->getHash());
         if($key) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }

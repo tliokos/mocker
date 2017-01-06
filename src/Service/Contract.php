@@ -85,4 +85,13 @@ class Contract
     {
         return $this->contractStorage->delete($contractId);
     }
+
+    /**
+     * @param string $contractId
+     * @return string
+     */
+    public function getResourceUri(string $contractId) : string
+    {
+        return sprintf('/mocker-api/contracts/%s', $contractId);
+    }
 }

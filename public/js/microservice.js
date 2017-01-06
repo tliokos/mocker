@@ -58,18 +58,24 @@ $(function(){
                 name: fields.name.val(),
                 description: fields.description.val()
             },
-            callback: function(request, microservice){
-                microservice.name = request.name;
-                microservice.description = request.description;
-                microservice.contracts = 0;
-                view.addRow(microservice)
+            callback: function(response, status, xhr){
+                $.get(xhr.getResponseHeader('Location'), function(response) {
+                    view.addRow(response.data);
+                });
             }
         })
     });
 
     table.on('click', '.delete', function(){
-        controller.delete($(this), '/mocker-api/microservices', function(microservice) {
-            view.removeRow(microservice);
+        controller.delete({
+            trigger: $(this),
+            url: '/mocker-api/microservices',
+            getLabel: function(row) {
+                return 'microservice "<b>' + row.data().name + '</b>"';
+            },
+            callback: function(microservice) {
+                view.removeRow(microservice);
+            }
         });
     });
 });

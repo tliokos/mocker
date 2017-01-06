@@ -2,7 +2,11 @@
 
 namespace Mocker\Controller;
 
-use Mocker\{StatusCode, Service\Contract};
+use Mocker\{
+    StatusCode,
+    Service\Contract,
+    Storage\Contract as ContractStorage
+};
 use Symfony\Component\HttpFoundation\{Request, JsonResponse};
 
 class MocksController
@@ -23,17 +27,17 @@ class MocksController
 
     /**
      * @param Request $request
-     * @param $contractUrl
+     * @param $url
      * @return JsonResponse
      * @throws \Exception
      */
-    public function handle(Request $request, $microservice, $contractUrl) : JsonResponse
+    public function handle(Request $request, $microservice, $url) : JsonResponse
     {
-        $contractId = md5($microservice . $request->getMethod() . $contractUrl);
+        $contractId = ContractStorage::getId($microservice, $request->getMethod(), $url);
         $contract = $this->contract->get($contractId);
         if(!$contract) {
             throw new \Exception(
-                sprintf('The contract %s::%s doesn\'t exist', $request->getMethod(), $contractUrl),
+                sprintf('The contract %s::%s/%s doesn\'t exist', $request->getMethod(), $url, $microservice),
                 StatusCode::NOT_FOUND);
         }
 

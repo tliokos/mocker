@@ -172,10 +172,9 @@ Mocker.Controller = function(view) {
                     view.displayErrors(response.responseJSON);
                 }
             },
-            success: function (response) {
+            success: function (response, status, xhr) {
                 params.trigger.removeAttr('disabled');
-                var data = response ? response.data : null;
-                params.callback(params.data, data);
+                params.callback(response, status, xhr);
                 view.hideModal();
             }
         });
@@ -189,27 +188,26 @@ Mocker.Controller = function(view) {
         this.ajax('PUT', params);
     };
 
-    this.delete = function(trigger, url, callback) {
-        var row = view.getRow(trigger);
-        var label = url.split('/')[2].slice(0, -1);
+    this.delete = function(params) {
+        var row = view.getRow(params.trigger);
         bootbox.confirm({
-            title: 'Delete ' + label + '? This cannot be undone.',
-            message: 'Are you sure you want to delete the ' + label + '?',
+            title: 'Delete Element?',
+            message: 'Are you sure you want to delete ' + params.getLabel(row) + '?',
             buttons: {
                 cancel: {
-                    label: '<i class="fa fa-times"></i> Cancel'
+                    label: 'Cancel'
                 },
                 confirm: {
-                    label: '<i class="fa fa-check"></i> Confirm'
+                    label: 'Confirm'
                 }
             },
             callback: function (confirmed) {
                 if(confirmed) {
                     $.ajax({
-                        url: url + '/' + row.data().id,
+                        url: params.url + '/' + row.data().id,
                         type: 'DELETE',
                         success: function() {
-                            callback(row);
+                            params.callback(row);
                         }
                     });
                 }

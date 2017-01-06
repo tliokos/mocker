@@ -159,7 +159,7 @@ class ContractsCest
         return [
             [
                 'microservice' => [
-                    'id' => null,
+                    'id' => '',
                     'name' => 'microservice-name'
                 ],
                 'method' => 'POST',
@@ -170,14 +170,14 @@ class ContractsCest
                 ],
                 'request' => '[{"name"="example-name"},{"description"="example-description"}]',
                 'response' => '[{"id"=1}]',
-                'code' => '200'
+                'code' => '201'
             ],
             [
                 'microservice' => [
                     'id' => 'hash',
                     'name' => 'microservice-name'
                 ],
-                'method' => null,
+                'method' => '',
                 'url' => 'examples',
                 'headers' => [
                     'Authorization' => 'Bearer #',
@@ -185,7 +185,7 @@ class ContractsCest
                 ],
                 'request' => '[{"name"="example-name"},{"description"="example-description"}]',
                 'response' => '[{"id"=1}]',
-                'code' => '200'
+                'code' => '201'
             ],
             [
                 'microservice' => [
@@ -193,14 +193,14 @@ class ContractsCest
                     'name' => 'microservice-name'
                 ],
                 'method' => 'POST',
-                'url' => null,
+                'url' => '',
                 'headers' => [
                     'Authorization' => 'Bearer #',
                     'Content-Type' => 'application/json'
                 ],
                 'request' => '[{"name"="example-name"},{"description"="example-description"}]',
                 'response' => '[{"id"=1}]',
-                'code' => '200'
+                'code' => '201'
             ],
             [
                 'microservice' => [
@@ -215,7 +215,7 @@ class ContractsCest
                 ],
                 'request' => '[{"name"="example-name"},{"description"="example-description"}]',
                 'response' => '[{"id"=1}]',
-                'code' => null
+                'code' => ''
             ]
         ];
     }

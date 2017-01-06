@@ -5,6 +5,7 @@ $app->get('/mocker-dashboard/{template}', function($template) use ($app) {
 });
 
 $app->get('/mocker-api/microservices', 'microservice.controller:list');
+$app->get('/mocker-api/microservices/{microserviceId}', 'microservice.controller:get');
 $app->post('/mocker-api/microservices', 'microservice.controller:create');
 $app->delete('/mocker-api/microservices/{microserviceId}', 'microservice.controller:delete');
 
@@ -51,7 +52,7 @@ $app->get('/mocker-api/httpHeaders', function() {
     ], Mocker\StatusCode::OK);
 });
 
-$app->match('{microservice}/{contractUrl}', 'mocks.controller:handle')
+$app->match('{microservice}/{url}', 'mocks.controller:handle')
     ->assert('microservice', '^[a-zA-Z\-\_]+$')
-    ->assert('contractUrl', '.*')
+    ->assert('url', '.*')
     ->method('GET|POST|PUT|PATCH|DELETE|OPTIONS');

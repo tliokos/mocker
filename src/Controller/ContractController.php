@@ -5,6 +5,7 @@ namespace Mocker\Controller;
 use Twig_Environment as View;
 use Symfony\Component\HttpFoundation\{Request, JsonResponse};
 use Mocker\{
+    Header,
     Service\Microservice,
     Service\Contract,
     Service\Relationship,
@@ -96,7 +97,9 @@ class ContractController
         $contract = $this->resourceFormatter
             ->setTransformer('contract.id')->formatItem(['id' => $contractId]);
 
-        return new JsonResponse($contract, StatusCode::CREATED);
+        return new JsonResponse($contract, StatusCode::CREATED, [
+            Header::LOCATION => $this->contract->getResourceUri($contractId)
+        ]);
     }
 
     /**

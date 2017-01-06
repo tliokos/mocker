@@ -3,6 +3,7 @@
 namespace Mocker\Validator;
 
 use Mocker\{
+    Constraint\Json,
     Constraint\UniqueStorageKey,
     Storage\Contract as ContractStorage
 };
@@ -27,13 +28,13 @@ class Contract extends AbstractValidator
                 new UniqueStorageKey(
                     sprintf(
                         ContractStorage::CONTRACTS_KEY,
-                        md5($contract['microservice']['name'] . $contract['method'] . $contract['url']))
+                        ContractStorage::getId($contract['microservice']['name'], $contract['method'], $contract['url']))
                 ),
             ],
             'headers' => [],
-            'request' => [],
+            'request' => [new Json()],
             'code' => [new Assert\NotBlank()],
-            'response' => [],
+            'response' => [new Json()],
         ]);
     }
 
@@ -50,9 +51,9 @@ class Contract extends AbstractValidator
             'method' => [new Assert\NotBlank()],
             'url' => [new Assert\NotBlank()],
             'headers' => [],
-            'request' => [],
+            'request' => [new Json()],
             'code' => [new Assert\NotBlank()],
-            'response' => [],
+            'response' => [new Json()],
         ]);
     }
 }

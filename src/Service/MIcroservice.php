@@ -83,4 +83,13 @@ class Microservice
     {
         return $this->microserviceStorage->updateContractsCounter($microserviceId, $number);
     }
+
+    /**
+     * @param string $microserviceId
+     * @return string
+     */
+    public function getResourceUri(string $microserviceId) : string
+    {
+        return sprintf('/mocker-api/microservices/%s', $microserviceId);
+    }
 }
