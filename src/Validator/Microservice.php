@@ -20,7 +20,7 @@ class Microservice extends AbstractValidator
             'name' => [
                 new Assert\NotBlank(),
                 new UniqueStorageKey(
-                    sprintf(MicroserviceStorage::MICROSERVICES_KEY, MicroserviceStorage::getId($microservice))),
+                    sprintf(MicroserviceStorage::MICROSERVICES_KEY, MicroserviceStorage::getId($microservice['name']))),
                 new Assert\Regex([
                     'pattern' => '/^[a-zA-Z\-\_]+$/',
                     'message' => 'The value should contain only letters, dashes and/or underscore',

@@ -60,16 +60,7 @@ class MicroservicesCest
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
     }
-
-    public function createMicroserviceWithMissingData(AcceptanceTester $I)
-    {
-        $I->wantTo("Create a Microservice with missing data");
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/mocker-api/microservices', []);
-        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseIsJson();
-    }
-
+    
     public function createContractUnderMicroservice(AcceptanceTester $I)
     {
         $I->wantTo("Create a Contract under a Microservice");

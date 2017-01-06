@@ -23,12 +23,14 @@ class Contract
     }
 
     /**
-     * @param array $contract
+     * @param string $microservice
+     * @param string $method
+     * @param string $url
      * @return string
      */
-    public static function getId(array $contract) : string
+    public static function getId(string $microservice, string $method, string $url) : string
     {
-        return md5($contract['microservice']['name'] . $contract['method'] . $contract['url']);
+        return md5(sprintf('%s%s%s', $microservice, $method, $url));
     }
 
     /**
@@ -60,7 +62,7 @@ class Contract
      */
     public function create($contract) : string
     {
-        $contractId = self::getId($contract);
+        $contractId = self::getId($contract['microservice']['name'], $contract['method'], $contract['url']);
         $contract = array_merge(['id' => $contractId], $contract);
         $this->storage->hMset(sprintf(self::CONTRACTS_KEY, $contractId), array_map(function($field) {
             return is_array($field) ? json_encode($field) : $field;

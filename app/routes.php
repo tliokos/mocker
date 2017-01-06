@@ -52,7 +52,7 @@ $app->get('/mocker-api/httpHeaders', function() {
     ], Mocker\StatusCode::OK);
 });
 
-$app->match('{microservice}/{contractUrl}', 'mocks.controller:handle')
+$app->match('{microservice}/{url}', 'mocks.controller:handle')
     ->assert('microservice', '^[a-zA-Z\-\_]+$')
-    ->assert('contractUrl', '.*')
+    ->assert('url', '.*')
     ->method('GET|POST|PUT|PATCH|DELETE|OPTIONS');

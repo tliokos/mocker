@@ -25,12 +25,12 @@ class Microservice
     }
 
     /**
-     * @param array $microservice
+     * @param string $name
      * @return string
      */
-    public static function getId(array $microservice) : string
+    public static function getId(string $name) : string
     {
-        return md5($microservice['name']);
+        return md5($name);
     }
 
     /**
@@ -62,7 +62,7 @@ class Microservice
      */
     public function create(array $microservice) : string
     {
-        $microserviceId = self::getId($microservice);
+        $microserviceId = self::getId($microservice['name']);
         $microservice = array_merge(['id' => $microserviceId, self::CONTRACTS_FIELD => 0], $microservice);
         $this->storage->hMset(sprintf(self::MICROSERVICES_KEY, $microserviceId), $microservice);
 

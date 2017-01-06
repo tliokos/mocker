@@ -11,7 +11,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 $app->register(new Silex\Provider\ValidatorServiceProvider(), array(
-    'validator.validator_service_ids' => array(
-        'unique.storage.key.validator' => 'unique.storage.key.validator'
-    )
+    'validator.validator_service_ids' => [
+        'unique.storage.key.validator' => 'unique.storage.key.validator',
+        'json.validator' => 'json.validator'
+    ]
 ));

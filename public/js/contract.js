@@ -57,24 +57,26 @@ $(function(){
                 defaultContent: htmlHelper.renderActionButtons()
             }
         ],
-        initComplete: function () {
+        initComplete: function() {
             var footerRows = $('tfoot tr', table);
             footerRows.each(function(){
                 $('th', this).html('');
             });
             $('thead', table).append(footerRows);
+
             this.api().columns('.list-filtering').every(function () {
                 var column = this;
                 var select = $('<select class="filter"><option value="">Filter</option></select>')
                     .appendTo($(column.footer()).empty())
                     .on('change', function() {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                        column.search( val ? '^'+val+'$' : '', true, false ).draw();
+                        column.search(val ? '^'+val+'$' : '', true, false).draw();
                     });
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                column.data().unique().sort().each(function (d, j) {
+                    select.append('<option value="'+d+'">'+d+'</option>')
                 } );
             });
+
             this.api().columns('.text-filtering').every(function () {
                 var column = this;
                 var input = $('<input type="text" class="filter"/>')
@@ -83,7 +85,7 @@ $(function(){
                         if (column.search() !== this.value) {
                             column.search(this.value).draw();
                         }
-                });
+                    });
             });
         }
     });
@@ -114,14 +116,15 @@ $(function(){
     });
 
     table.on('click', '.pre-update', function(){
+        $('.errors', modal).html('').hide();
         var contract = view.getRow($(this)).data();
         fields.id.val(contract.id);
         fields.microservice.prop('disabled', true).val(contract.microservice.id);
         fields.method.prop('disabled', true).val(contract.method);
         fields.url.prop('disabled', true).val(contract.url);
-        fields.request.setValue(contract.request, -1);
+        fields.request.setValue(contract.request ? contract.request : '', -1);
         fields.code.val(contract.code);
-        fields.response.setValue(contract.response, -1);
+        fields.response.setValue(contract.response ? contract.response : '', -1);
         htmlHelper.populateHeaders(contract.headers, modal);
         htmlHelper.onlyButton('update', modal);
         $('.nav-tabs a[href="#tab-general"]').tab('show');
@@ -129,7 +132,6 @@ $(function(){
     });
 
     modal.on('click', '.create', function() {
-        var headers = htmlHelper.getHeaderData();
         controller.create({
             trigger: $(this),
             url: '/mocker-api/contracts',
@@ -140,13 +142,14 @@ $(function(){
                 },
                 method: fields.method.val(),
                 url: fields.url.val(),
-                headers: headers,
+                headers: htmlHelper.getHeaderData(),
                 request: fields.request.getValue(),
                 code: fields.code.val(),
                 response: fields.response.getValue()
             },
             callback: function(response, status, xhr){
                 $.get(xhr.getResponseHeader('Location'), function(response) {
+                    console.log(response.data);
                     view.addRow(response.data);
                 });
             }
