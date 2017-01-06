@@ -102,12 +102,12 @@ $(function(){
 
     $('.pre-create').on('click', function(){
         $('.errors', modal).html('').hide();
-        modal.find('input').val('');
+        modal.find('input').prop('disabled', false).val('');
         fields.request.setValue('', -1);
         fields.response.setValue('', -1);
         $('.remove-header').click();
         fields.microservice.prop('disabled', false).val('');
-        fields.method.val($('option:first', fields.method).val());
+        fields.method.prop('disabled', false).val($('option:first', fields.method).val());
         fields.code.val('');
         htmlHelper.onlyButton('create', modal);
         $('.nav-tabs a[href="#tab-general"]').tab('show');
@@ -145,15 +145,10 @@ $(function(){
                 code: fields.code.val(),
                 response: fields.response.getValue()
             },
-            callback: function(request, contract){
-                contract.microservice = request.microservice;
-                contract.method = request.method;
-                contract.url = request.url;
-                contract.headers = request.headers;
-                contract.request = request.request;
-                contract.code = request.code;
-                contract.response = request.response;
-                view.addRow(contract)
+            callback: function(response, status, xhr){
+                $.get(xhr.getResponseHeader('Location'), function(response) {
+                    view.addRow(response.data);
+                });
             }
         });
     });

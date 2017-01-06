@@ -5,11 +5,7 @@ namespace Mocker\Controller;
 use Twig_Environment as View;
 use Symfony\Component\HttpFoundation\{Request, JsonResponse};
 use Mocker\{
-    Service\Microservice,
-    Service\Contract,
-    Service\Relationship,
-    StatusCode,
-    Resource\Formatter as ResourceFormatter
+    Header, Service\Microservice, Service\Contract, Service\Relationship, StatusCode, Resource\Formatter as ResourceFormatter
 };
 
 class MicroserviceController
@@ -68,10 +64,19 @@ class MicroserviceController
     public function list() : JsonResponse
     {
         $microservices = $this->microservice->list();
-        $microservices = $this->resourceFormatter
+        $response = $this->resourceFormatter
             ->setTransformer('microservice.collection')->formatCollection($microservices);
 
-        return new JsonResponse($microservices, StatusCode::OK);
+        return new JsonResponse($response, StatusCode::OK);
+    }
+
+    public function get(string $microserviceId) : JsonResponse
+    {
+        $microservice = $this->microservice->get($microserviceId);
+        $response = $this->resourceFormatter
+            ->setTransformer('microservice.item')->formatItem($microservice);
+
+        return new JsonResponse($response, StatusCode::OK);
     }
 
     /**
@@ -82,10 +87,12 @@ class MicroserviceController
     {
         $data = json_decode($request->getContent(), true);
         $microserviceId = $this->microservice->create($data);
-        $microservice = $this->resourceFormatter
-            ->setTransformer('microservice.item')->formatItem(['id' => $microserviceId]);
+        $response = $this->resourceFormatter
+            ->setTransformer('microservice.id')->formatItem(['id' => $microserviceId]);
 
-        return new JsonResponse($microservice, StatusCode::CREATED);
+        return new JsonResponse($response, StatusCode::CREATED, [
+            Header::LOCATION => $this->microservice->getResourceUri($microserviceId)
+        ]);
     }
 
     /**

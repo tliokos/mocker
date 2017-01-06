@@ -4,7 +4,7 @@ namespace Mocker\Transformer\Microservice;
 
 use League\Fractal\TransformerAbstract;
 
-class Item extends TransformerAbstract
+class Id extends TransformerAbstract
 {
     /**
      * @param array $microservice
@@ -13,10 +13,7 @@ class Item extends TransformerAbstract
     public function transform(array $microservice) : array
     {
         return [
-            'id' => $microservice['id'],
-            'name' => $microservice['name'],
-            'description' => $microservice['description'],
-            'contracts' => $microservice['contracts']
+            'id' => $microservice['id']
         ];
     }
 }

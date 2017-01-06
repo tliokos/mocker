@@ -172,10 +172,9 @@ Mocker.Controller = function(view) {
                     view.displayErrors(response.responseJSON);
                 }
             },
-            success: function (response) {
+            success: function (response, status, xhr) {
                 params.trigger.removeAttr('disabled');
-                var data = response ? response.data : null;
-                params.callback(params.data, data);
+                params.callback(response, status, xhr);
                 view.hideModal();
             }
         });

@@ -58,11 +58,10 @@ $(function(){
                 name: fields.name.val(),
                 description: fields.description.val()
             },
-            callback: function(request, microservice){
-                microservice.name = request.name;
-                microservice.description = request.description;
-                microservice.contracts = 0;
-                view.addRow(microservice)
+            callback: function(response, status, xhr){
+                $.get(xhr.getResponseHeader('Location'), function(response) {
+                    view.addRow(response.data);
+                });
             }
         })
     });

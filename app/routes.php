@@ -5,6 +5,7 @@ $app->get('/mocker-dashboard/{template}', function($template) use ($app) {
 });
 
 $app->get('/mocker-api/microservices', 'microservice.controller:list');
+$app->get('/mocker-api/microservices/{microserviceId}', 'microservice.controller:get');
 $app->post('/mocker-api/microservices', 'microservice.controller:create');
 $app->delete('/mocker-api/microservices/{microserviceId}', 'microservice.controller:delete');
 
