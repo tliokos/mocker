@@ -60,7 +60,7 @@ class Contract
      */
     public function create($contract) : string
     {
-        $contractId = md5($contract['microservice']['name'] . $contract['method'] . $contract['url']);
+        $contractId = self::getId($contract);
         $contract = array_merge(['id' => $contractId], $contract);
         $this->storage->hMset(sprintf(self::CONTRACTS_KEY, $contractId), array_map(function($field) {
             return is_array($field) ? json_encode($field) : $field;

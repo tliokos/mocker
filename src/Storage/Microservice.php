@@ -62,7 +62,7 @@ class Microservice
      */
     public function create(array $microservice) : string
     {
-        $microserviceId = md5($microservice['name']);
+        $microserviceId = self::getId($microservice);
         $microservice = array_merge(['id' => $microserviceId, self::CONTRACTS_FIELD => 0], $microservice);
         $this->storage->hMset(sprintf(self::MICROSERVICES_KEY, $microserviceId), $microservice);
 
