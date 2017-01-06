@@ -15,13 +15,12 @@ class Microservice extends AbstractValidator
      */
     protected function create() : Assert\Collection
     {
-        $resource = $this->getResource();
+        $microservice = $this->getResource();
         return new Assert\Collection([
             'name' => [
                 new Assert\NotBlank(),
                 new UniqueStorageKey(
-                    sprintf(MicroserviceStorage::MICROSERVICES_KEY, md5($resource['name']))
-                ),
+                    sprintf(MicroserviceStorage::MICROSERVICES_KEY, MicroserviceStorage::getId($microservice))),
                 new Assert\Regex([
                     'pattern' => '/^[a-zA-Z\-\_]+$/',
                     'message' => 'The value should contain only letters, dashes and/or underscore',

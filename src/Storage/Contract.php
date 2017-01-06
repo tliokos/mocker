@@ -23,6 +23,15 @@ class Contract
     }
 
     /**
+     * @param array $contract
+     * @return string
+     */
+    public static function getId(array $contract) : string
+    {
+        return md5($contract['microservice']['name'] . $contract['method'] . $contract['url']);
+    }
+
+    /**
      * @return array
      */
     public function list() : array

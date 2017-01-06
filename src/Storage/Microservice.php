@@ -25,6 +25,15 @@ class Microservice
     }
 
     /**
+     * @param array $microservice
+     * @return string
+     */
+    public static function getId(array $microservice) : string
+    {
+        return md5($microservice['name']);
+    }
+
+    /**
      * @return array
      */
     public function list() : array

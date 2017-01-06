@@ -24,11 +24,7 @@ class Contract extends AbstractValidator
             'method' => [new Assert\NotBlank()],
             'url' => [
                 new Assert\NotBlank(),
-                new UniqueStorageKey(
-                    sprintf(
-                        ContractStorage::CONTRACTS_KEY,
-                        md5($contract['microservice']['name'] . $contract['method'] . $contract['url']))
-                ),
+                new UniqueStorageKey(sprintf(ContractStorage::CONTRACTS_KEY, ContractStorage::getId($contract))),
             ],
             'headers' => [],
             'request' => [],
