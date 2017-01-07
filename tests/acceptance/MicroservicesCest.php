@@ -60,7 +60,7 @@ class MicroservicesCest
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
     }
-    
+
     public function createContractUnderMicroservice(AcceptanceTester $I)
     {
         $I->wantTo("Create a Contract under a Microservice");
