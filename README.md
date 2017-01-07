@@ -45,7 +45,7 @@ assume that we've created the following contract.
  Method: GET, URL: producer/1
 ```
     
-##### Response  
+#### Response  
 
 ``` 
 Code: 200, Body: [{"id":1, "name":"name"}] 
