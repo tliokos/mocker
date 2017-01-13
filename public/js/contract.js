@@ -30,7 +30,7 @@ $(function(){
             },
             {
                 data: 'microservice.name',
-                width: '15%',
+                width: '10%',
                 class: 'list-filtering'
             },
             {
@@ -40,7 +40,7 @@ $(function(){
             },
             {
                 data: 'url',
-                width: '45%',
+                width: '60%',
                 class: 'text-filtering',
                 render: function(url) {
                     return decodeURIComponent(url);
@@ -55,7 +55,7 @@ $(function(){
                 }
             },
             {
-                width: '15%',
+                width: '10%',
                 orderable: false,
                 data: null,
                 defaultContent: htmlHelper.renderActionButtons()
