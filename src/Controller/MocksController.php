@@ -33,7 +33,7 @@ class MocksController
      */
     public function handle(Request $request, $microservice, $url) : JsonResponse
     {
-        $url = $request->getQueryString() ? sprintf('%s?%s', $url, $request->getQueryString()) : $url;
+        $url = urldecode($request->getQueryString() ? sprintf('%s?%s', $url, $request->getQueryString()) : $url);
         $contractId = ContractStorage::getId($microservice, $request->getMethod(), $url);
         $contract = $this->contract->get($contractId);
         if(!$contract) {
