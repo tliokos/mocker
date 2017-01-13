@@ -40,7 +40,7 @@ $(function(){
             },
             {
                 data: 'url',
-                width: '55%',
+                width: '50%',
                 class: 'text-filtering',
                 render: function(url) {
                     return decodeURIComponent(url);
