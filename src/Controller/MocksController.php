@@ -38,7 +38,7 @@ class MocksController
         $contract = $this->contract->get($contractId);
         if(!$contract) {
             throw new \Exception(
-                sprintf('The contract %s::%s/%s doesn\'t exist', $request->getMethod(), $url, $microservice),
+                sprintf('The contract %s::%s/%s doesn\'t exist', $request->getMethod(), $microservice, $url),
                 StatusCode::NOT_FOUND);
         }
 
