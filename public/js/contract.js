@@ -30,28 +30,32 @@ $(function(){
             },
             {
                 data: 'microservice.name',
-                width: '20%',
+                width: '15%',
                 class: 'list-filtering'
             },
             {
                 data: 'method',
-                width: '20%',
+                width: '10%',
                 class: 'list-filtering'
             },
             {
                 data: 'url',
-                width: '20%',
-                class: 'text-filtering'
+                width: '55%',
+                class: 'text-filtering',
+                render: function(url) {
+                    return decodeURIComponent(url);
+                }
             },
             {
                 data: 'code',
-                width: '20%',
+                width: '10%',
                 class: 'list-filtering',
                 render: function(code) {
                     return htmlHelper.renderResponseCodeLabel(code);
                 }
             },
             {
+                width: '10%',
                 orderable: false,
                 data: null,
                 defaultContent: htmlHelper.renderActionButtons()
@@ -121,7 +125,7 @@ $(function(){
         fields.id.val(contract.id);
         fields.microservice.prop('disabled', true).val(contract.microservice.id);
         fields.method.prop('disabled', true).val(contract.method);
-        fields.url.prop('disabled', true).val(contract.url);
+        fields.url.prop('disabled', true).val(decodeURIComponent(contract.url));
         fields.request.setValue(contract.request ? contract.request : '', -1);
         fields.code.val(contract.code);
         fields.response.setValue(contract.response ? contract.response : '', -1);
@@ -192,7 +196,7 @@ $(function(){
                 var microservice = row.data().microservice.name;
                 var method = row.data().method;
                 var url = row.data().url;
-                return 'contract "<b>' + method + '::' + microservice + '/' + url + '</b>"';
+                return 'contract "<b>' + method + '::' + microservice + '/' + decodeURIComponent(url) + '</b>"';
             },
             callback: function(microservice) {
                 view.removeRow(microservice);

@@ -49,6 +49,15 @@ class MocksCest
             [
                 'microservice' => json_encode($this->microservice),
                 'method' => 'GET',
+                'url' => 'statsAgg?query=%7B%22fields%22%3A%5B%22advertiser_id%22%5D%2C%22filters%22%3A%7B%22advertiser_id%22%3A%7B%22relation%22%3A%22in%22%2C%22sets%22%3A%5B1%2C2%5D%7D%2C%22date%22%3A%7B%22relation%22%3A%22between%22%2C%22sets%22%3A%5B%222016-01-01%22%2C%222016-12-31%22%5D%7D%7D%2C%22groups%22%3A%5B%22advertiser_id%22%5D%2C%22groupDefaultNumber%22%3A0%2C%22orders%22%3A%7B%22date%22%3A%22desc%22%7D%2C%22page%22%3A0%2C%22limit%22%3A100%7D',
+                'headers' => '',
+                'request' => '',
+                'response' => '{"status":"OK","message":"","metadata":{"total":1,"page":1,"query":{"fields":["advertiser_id"],"filters":{"advertiser_id":{"relation":"in","sets":[1,2]},"date":{"relation":"between","sets":["2016-01-01","2016-12-31"]}},"groups":["advertiser_id"],"groupDefaultNumber":0,"orders":{"date":"desc"},"page":0,"limit":100}},"data":[{"advertiser_id":"1"}]}',
+                'code' => '200'
+            ],
+            [
+                'microservice' => json_encode($this->microservice),
+                'method' => 'GET',
                 'url' => 'examples/1',
                 'headers' => '',
                 'request' => '',
