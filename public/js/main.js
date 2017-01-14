@@ -4,18 +4,28 @@ Mocker.HtmlHelper = function(){
 
     this.renderDeleteButton = function() {
         return $('<button>').prop({
-            class: 'btn btn-danger btn-sm delete float-right'
+            class: 'btn btn-danger btn-sm delete float-right',
+            title: 'Delete Contract'
         }).html('<span class="glyphicon glyphicon-trash"></span>').prop('outerHTML');
     };
 
     this.renderUpdateButton = function() {
         return $('<button>').prop({
-            class: 'btn btn-primary btn-sm pre-update float-right'
+            class: 'btn btn-primary btn-sm pre-update float-right',
+            title: 'Update Contract'
         }).html('<span class="glyphicon glyphicon-edit"></span>').prop('outerHTML');
     };
 
-    this.renderActionButtons = function() {
-        return this.renderDeleteButton() + this.renderUpdateButton();
+    this.renderCopyButton = function(row) {
+        return $('<button>').prop({
+            class: 'btn btn-success btn-sm clipboard float-right',
+            title: 'Copy Contract URL'
+        }).attr('data-clipboard-text', window.location.host + '/mocker-api/contracts/' + row.id + '?decoded=true')
+        .html('<span class="glyphicon glyphicon-copy"></span>').prop('outerHTML');
+    };
+
+    this.renderActionButtons = function(row) {
+        return  this.renderDeleteButton() + this.renderUpdateButton() + this.renderCopyButton(row);
     };
 
     this.renderContractsCounterLabel = function(contracts){
