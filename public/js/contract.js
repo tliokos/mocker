@@ -30,7 +30,7 @@ $(function(){
             },
             {
                 data: 'microservice.name',
-                width: '10%',
+                width: '15%',
                 class: 'list-filtering'
             },
             {
@@ -40,7 +40,7 @@ $(function(){
             },
             {
                 data: 'url',
-                width: '60%',
+                width: '50%',
                 class: 'text-filtering',
                 render: function(url) {
                     return decodeURIComponent(url);
@@ -55,10 +55,12 @@ $(function(){
                 }
             },
             {
-                width: '10%',
+                width: '15%',
                 orderable: false,
                 data: null,
-                defaultContent: htmlHelper.renderActionButtons()
+                render: function(row) {
+                    return htmlHelper.renderActionButtons(row);
+                }
             }
         ],
         initComplete: function() {
@@ -98,6 +100,7 @@ $(function(){
     htmlHelper.renderHeaderInputs().registerAutocomplete();
     var view = new Mocker.View(dataTable, modal);
     var controller = new Mocker.Controller(view);
+    new Clipboard('.clipboard');
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
         fields.request.resize();
@@ -153,7 +156,6 @@ $(function(){
             },
             callback: function(response, status, xhr){
                 $.get(xhr.getResponseHeader('Location'), function(response) {
-                    console.log(response.data);
                     view.addRow(response.data);
                 });
             }
@@ -203,5 +205,4 @@ $(function(){
             }
         });
     });
-
 });

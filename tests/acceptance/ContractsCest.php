@@ -151,6 +151,73 @@ class ContractsCest
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNPROCESSABLE_ENTITY);
     }
 
+    public function getNotDecodedContractDetails(AcceptanceTester $I)
+    {
+        $I->wantTo("Get Contract Details");
+        $I->haveInRedis('hash', $this->microserviceHash, $this->microservice);
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST('/mocker-api/contracts', array_merge([
+            'microservice' => [
+                'id' => $this->microserviceId,
+                'name' => $this->microservice['name']
+            ]], $this->contract));
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::CREATED);
+        $I->seeResponseIsJson();
+        $contractId = $I->grabDataFromResponseByJsonPath('$.data.id')[0];
+        $I->sendGET('/mocker-api/contracts/' . $contractId);
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->assertEquals('17a57f651d2a2346c080690d172c6fb1', $I->grabDataFromResponseByJsonPath('$.data.id')[0]);
+        $I->assertEquals([
+            "id" => "1465d24108f608c5c2ace4d0725190a7",
+            "name" => "microservice-name"
+        ], $I->grabDataFromResponseByJsonPath('$.data.microservice')[0]);
+        $I->assertEquals([
+            "Authorization" => "Bearer #",
+            "Content-Type" => "application/json"
+        ], $I->grabDataFromResponseByJsonPath('$.data.headers')[0]);
+        $I->assertEquals('POST', $I->grabDataFromResponseByJsonPath('$.data.method')[0]);
+        $I->assertEquals('examples', $I->grabDataFromResponseByJsonPath('$.data.url')[0]);
+        $I->assertEquals(200, $I->grabDataFromResponseByJsonPath('$.data.code')[0]);
+        $I->assertEquals('[{"name":"example-name"},{"description":"example-description"}]', $I->grabDataFromResponseByJsonPath('$.data.request')[0]);
+        $I->assertEquals('[{"id":1}]', $I->grabDataFromResponseByJsonPath('$.data.response')[0]);
+    }
+
+    public function getDecodedContractDetails(AcceptanceTester $I)
+    {
+        $I->wantTo("Get Contract Details");
+        $I->haveInRedis('hash', $this->microserviceHash, $this->microservice);
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST('/mocker-api/contracts', array_merge([
+            'microservice' => [
+                'id' => $this->microserviceId,
+                'name' => $this->microservice['name']
+            ]], $this->contract));
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::CREATED);
+        $I->seeResponseIsJson();
+        $contractId = $I->grabDataFromResponseByJsonPath('$.data.id')[0];
+        $I->sendGET('/mocker-api/contracts/' . $contractId . '?decoded=true');
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->assertEquals('17a57f651d2a2346c080690d172c6fb1', $I->grabDataFromResponseByJsonPath('$.data.id')[0]);
+        $I->assertEquals([
+            "id" => "1465d24108f608c5c2ace4d0725190a7",
+            "name" => "microservice-name"
+        ], $I->grabDataFromResponseByJsonPath('$.data.microservice')[0]);
+        $I->assertEquals([
+            "Authorization" => "Bearer #",
+            "Content-Type" => "application/json"
+        ], $I->grabDataFromResponseByJsonPath('$.data.headers')[0]);
+        $I->assertEquals('POST', $I->grabDataFromResponseByJsonPath('$.data.method')[0]);
+        $I->assertEquals('examples', $I->grabDataFromResponseByJsonPath('$.data.url')[0]);
+        $I->assertEquals(200, $I->grabDataFromResponseByJsonPath('$.data.code')[0]);
+        $I->assertEquals([
+            ["name" => "example-name"],
+            ["description" => "example-description"]
+        ], $I->grabDataFromResponseByJsonPath('$.data.request')[0]);
+        $I->assertEquals([
+            ["id" => 1]
+        ], $I->grabDataFromResponseByJsonPath('$.data.response')[0]);
+    }
+
     /**
      * @return array
      */

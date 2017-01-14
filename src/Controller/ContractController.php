@@ -75,9 +75,15 @@ class ContractController
         return new JsonResponse($contracts, StatusCode::OK);
     }
 
-    public function get(string $contractId) : JsonResponse
+    /**
+     * @param Request $request
+     * @param string $contractId
+     * @return JsonResponse
+     */
+    public function get(Request $request, string $contractId) : JsonResponse
     {
         $contract = $this->contract->get($contractId);
+        $contract['decoded'] = $request->get('decoded') === 'true' ? true : false;
         $contract = $this->resourceFormatter
             ->setTransformer('contract.item')->formatItem($contract);
 
