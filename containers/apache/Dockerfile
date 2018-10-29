@@ -1,25 +1,12 @@
-FROM ubuntu:xenial
+FROM php:7.2-apache
 
 ENV APACHE_DIR /etc/apache2
 
-RUN apt-get update && apt-get install -y \
-    apache2 \
-    curl \
-    git \
-    libapache2-mod-php \
-    php \
-    php-cli \
-    php-curl \
-    php-dom \
-    php-intl \
-    php-json \
-    php-ldap \
-    php-mbstring \
-    php-mcrypt \
-    php-redis \
-    php-zip \
-    && phpenmod mcrypt \
-    && apt-get clean
+RUN apt-get update && apt-get install -y curl git
+
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
 
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
